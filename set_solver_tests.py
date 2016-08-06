@@ -155,6 +155,24 @@ class TestSchemaActions(unittest.TestCase):
         self.assertDictEqual(five_set.make_validation_schema(), valid_5)
 
 
+class TestConstructCard(unittest.TestCase):
+    ''' Test Card class construction'''
+
+    def test_no_attribute_fail(self):
+        ''' SetSolver should raise parameter error if made without
+            attributes. '''
+
+        self.assertRaises(TypeError, Card)
+
+    def test_with_attributes(self):
+        ''' SetSolver should accept a dictionary of attributes.'''
+        attribs = {'colors': ['red', 'blue', 'yellow'],
+                   'shape':  ['circle', 'square', 'diamond'],
+                   'fill':   ['none', 'stripe', 'solid'],
+                   'number': [num for num in range(3)]}
+        a_card = Card(attribs)
+        self.assertIsNotNone(a_solver.attributes)
+
 class TestSetChecking(unittest.TestCase):
     ''' Test SetSolver's check_for_set method. '''
 
