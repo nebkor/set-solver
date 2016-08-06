@@ -44,5 +44,18 @@ class SetSolver(object):
                                  for exponent, variation
                                  in enumerate(variations)}
 
+        # Valid hands will be those that have one of each possible variation,
+        # or all of the same kind. With the scoring
+        # schema above for a 3 card game, the values for variations are
+        # 1, 3, 9. Winning hands would have scores of 3, 9, 27, or 13--
+        # all 1s, 3s, 9s, or one of each--for each attribute. This can be
+        # generalized as a set of ints from size_of_hand ** 2 to
+        # size_of_hand ** (size_of_hand + 1), plus the sum of the score for
+        # each attribute. 
+        schema['valid_scores'] = {pow(size_of_hand, exp)
+                                  for exp in range(1, size_of_hand + 1)}
+        schema['valid_scores'].add(sum(pow(size_of_hand, exp)
+                                       for exp in range(size_of_hand)))
+
         return schema
 

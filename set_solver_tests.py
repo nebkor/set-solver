@@ -105,7 +105,8 @@ class TestSolverActions(unittest.TestCase):
                                  'solid': 9},
                       'number': {'one': 1,
                                  'two': 3,
-                                 'three': 9}
+                                 'three': 9},
+                      'valid_scores': {3, 9, 27, 13} 
                      }
 
         valid_4    = {'colors': {'red': 1,
@@ -123,7 +124,8 @@ class TestSolverActions(unittest.TestCase):
                       'number': {'one': 1,
                                  'two': 4,
                                  'three': 16,
-                                 'four': 64}
+                                 'four': 64},
+                      'valid_scores': {4, 16, 64, 256, 85}
                      }
 
         valid_5    = {'colors': {'red': 1,
@@ -145,7 +147,8 @@ class TestSolverActions(unittest.TestCase):
                                  'two': 5,
                                  'three': 25,
                                  'four': 125,
-                                 'five': 625}
+                                 'five': 625},
+                      'valid_scores': {5, 25, 125, 625, 3125, 781}
                      }
 
         three_set = SetSolver(three_hand)
