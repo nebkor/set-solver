@@ -1,6 +1,7 @@
 # usr/bin/env python
 
 import random
+from itertools import combinations
 
 
 attribs = {'colors': ['red', 'blue', 'yellow'],
@@ -88,11 +89,27 @@ class SetSolver(object):
         else:
             return True
 
+    def find_all_sets(self, cards):
+        ''' Given a number of cards, find all possible sets. '''
+        sets = []
+        for hand in combinations(cards, len(self.attributes['number'])):
+            if self.check_for_set(hand):
+                sets.append(hand)
+        else:
+            print('Done checking.')
+        return sets
+
+
 class Card(object):
     ''' Stores card attributes. Takes attribute dict from SetSolver. If
         randomized, arbitrarily chooses one attribute from each.'''
     def __init__(self, attributes, randomize=True):
         self.attributes = self._parse_attribs(attributes, randomize)
+
+    def __str__(self):
+        header = 'Card:\n'
+        card_attribs = '\n'.join('{}: {}'.format(attribute, value) for attribute, value in self.attributes.items())
+        return header + card_attribs
 
     def _parse_attribs(self, attributes, randomize):
         ''' '''

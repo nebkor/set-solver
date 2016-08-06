@@ -173,6 +173,7 @@ class TestConstructCard(unittest.TestCase):
         a_card = Card(attribs)
         self.assertIsNotNone(a_card.attributes)
 
+
 class TestSetChecking(unittest.TestCase):
     ''' Test SetSolver's check_for_set method. '''
 
