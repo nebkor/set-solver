@@ -5,7 +5,6 @@ import unittest
 
 from set_solver import SetSolver
 
-# Standard set of card color, shape, fill, and number
 
 class TestConstructSolver(unittest.TestCase):
 
@@ -39,6 +38,7 @@ class TestConstructSolver(unittest.TestCase):
         self.assertRaises(TypeError, 
                           SetSolver, attribs_not_list,
                           msg='Attributes must be list.')
+
 
 class TestSchemaActions(unittest.TestCase):
 
@@ -153,6 +153,27 @@ class TestSchemaActions(unittest.TestCase):
         self.assertDictEqual(three_set.make_validation_schema(), valid_3)
         self.assertDictEqual(four_set.make_validation_schema(), valid_4)
         self.assertDictEqual(five_set.make_validation_schema(), valid_5)
+
+
+class TestSetChecking(unittest.TestCase):
+    ''' Test SetSolver's check_for_set method. '''
+
+    def test_wrong_size_hand(self):
+        ''' Solver should throw TypeError if hand smaller or larger than 
+            length of number attribute list. '''
+        three_hand = {'colors': ['red', 'blue', 'yellow'],
+                      'shape': ['circle', 'square', 'diamond'],
+                      'fill': ['none', 'stripe', 'solid'],
+                      'number': ['one', 'two', 'three']}
+
+        # replace with list of cards when card class done
+        too_small_hand = [0, 1]
+        too_large_hand = [0, 1, 2, 3]
+        three_solver = SetSolver(three_hand)
+
+        self.assertRaises(TypeError, three_solver.check_for_set, too_small_hand)
+        self.assertRaises(TypeError, three_solver.check_for_set, too_large_hand)
+
 
 if __name__ == '__main__':
     unittest.main()

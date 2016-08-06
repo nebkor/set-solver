@@ -3,16 +3,18 @@
 attribs = {'colors': ['red', 'blue', 'yellow'],
            'shape':  ['circle', 'square', 'diamond'],
            'fill':   ['none', 'stripe', 'solid'],
-           'number': [num for num in range(3)]}
+           'number': ['one', 'two', 'three']}
+
 
 class SetSolver(object):
-    """ Class that solves for number of sets in a hand of Set. Class is 
-        instatiated with a dictionary of dicts of lists. One of the dicts
-        must be keyed to 'number', the length of which is used to error check
-        on construction. """
+    """ Class that solves for number of sets in a hand of Set. 
+        :param attributes: is a dictionary of dictionaries of list, top level
+        keyed to attributes like 'color' or 'number'. Attribute lists must 
+        all be the same length. 'number' is a required attribute. """
     def __init__(self, attributes):
         super(SetSolver, self).__init__()
         self.attributes = self._check_attributes(attributes)
+        self.schema = self.make_validation_schema(attributes)
         return
 
     def _check_attributes(self, attributes):
@@ -61,4 +63,11 @@ class SetSolver(object):
                                        for exp in range(size_of_hand)))
 
         return schema
+
+    def check_for_set(self, list_of_cards):
+        ''' Check for combination of cards to see if it is a set. '''
+
+        if not len(list_of_cards) == len(self.attributes['number']):
+            raise TypeError('Number of cards not equal to number of variations')
+        
 
