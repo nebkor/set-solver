@@ -6,11 +6,14 @@ attribs = {'colors': ['red', 'blue', 'yellow'],
            'number': [num for num in range(3)]}
 
 class SetSolver(object):
-    """docstring for SetSolver"""
+    """ Class that solves for number of sets in a hand of Set. Class is 
+        instatiated with a dictionary of dicts of lists. One of the dicts
+        must be keyed to 'number', the length of which is used to error check
+        on construction. """
     def __init__(self, attributes):
         super(SetSolver, self).__init__()
         self.attributes = self._check_attributes(attributes)
-        return None
+        return
 
     def _check_attributes(self, attributes):
         ''' Ensure attributes is a dict of lists of equal length. '''
