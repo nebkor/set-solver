@@ -8,7 +8,7 @@ from set_solver import SetSolver
 attribs = {'colors': ['red', 'blue', 'yellow'],
            'shape':  ['circle', 'square', 'diamond'],
            'fill':   ['none', 'stripe', 'solid'],
-           'number': [range(3)]}
+           'number': [num for num in range(3)]}
 
 class TestConstructSolver(unittest.TestCase):
 
@@ -25,10 +25,19 @@ class TestConstructSolver(unittest.TestCase):
 
     def test_with_bad_attributes(self):
         ''' SetSolver should raise TypeError if passed malform attributes'''
-        pass
-
-
-
+        bad_len_attribs = {'colors': ['red', 'blue', 'yellow'],
+                           'shape':  ['circle', 'square', 'diamond'],
+                           'fill':   ['none', 'solid'],
+                           'number': [num for num in range(3)]}
+        attribs_not_list = {'colors': 'blue, red, green',
+                            'number': [0, 1]
+                           }
+        self.assertRaises(TypeError, 
+                          SetSolver, bad_len_attribs,
+                          msg='Attributes are not equal in number.')
+        self.assertRaises(TypeError, 
+                          SetSolver, attribs_not_list,
+                          msg='Attributes must be list.')
 
 if __name__ == '__main__':
     unittest.main()
