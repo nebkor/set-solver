@@ -1,6 +1,7 @@
 # usr/bin/env python
 
-import random 
+import random
+
 
 attribs = {'colors': ['red', 'blue', 'yellow'],
            'shape':  ['circle', 'square', 'diamond'],
@@ -66,12 +67,26 @@ class SetSolver(object):
 
         return schema
 
-    def check_for_set(self, list_of_cards):
-        ''' Check for combination of cards to see if it is a set. '''
+    def check_for_set(self, hand):
+        ''' Check hand of cards to see if it is a set. '''
 
-        if not len(list_of_cards) == len(self.attributes['number']):
+        if not len(hand) == len(self.attributes['number']):
             raise TypeError('Hand size must equal possible variations.')
 
+        # Loop through cards and build a score for each attribute, card by
+        # card. If by some mishap cards do not share the SetSolver's attributes
+        # here, a KeyError will be thrown.
+        hand_score = {attribute: 0 for attribute in self.attributes.keys()}
+        for card in hand:
+            for attribute in self.attributes.keys():
+                card_variation = card.attributes[attribute]
+                hand_score[attribute] += self.schema[attribute][card_variation]
+
+        for score in hand_score.values():
+            if not score in self.schema['valid_scores']:
+                return False
+        else:
+            return True
 
 class Card(object):
     ''' Stores card attributes. Takes attribute dict from SetSolver. If

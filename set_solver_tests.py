@@ -171,7 +171,7 @@ class TestConstructCard(unittest.TestCase):
                    'fill':   ['none', 'stripe', 'solid'],
                    'number': [num for num in range(3)]}
         a_card = Card(attribs)
-        self.assertIsNotNone(a_solver.attributes)
+        self.assertIsNotNone(a_card.attributes)
 
 class TestSetChecking(unittest.TestCase):
     ''' Test SetSolver's check_for_set method. '''
@@ -184,13 +184,79 @@ class TestSetChecking(unittest.TestCase):
                       'fill': ['none', 'stripe', 'solid'],
                       'number': ['one', 'two', 'three']}
 
-        # replace with list of cards when card class done
         too_small_hand = [Card(three_hand), Card(three_hand)]
         too_large_hand = [Card(three_hand), Card(three_hand), Card(three_hand), Card(three_hand)]
         three_solver = SetSolver(three_hand)
 
         self.assertRaises(TypeError, three_solver.check_for_set, too_small_hand)
         self.assertRaises(TypeError, three_solver.check_for_set, too_large_hand)
+
+    def test_hands_with_set(self):
+        three_hand = {'colors': ['red', 'blue', 'yellow'],
+                      'shape': ['circle', 'square', 'diamond'],
+                      'fill': ['none', 'stripe', 'solid'],
+                      'number': ['one', 'two', 'three']}
+        four_hand  = {'colors': ['red', 'blue', 'yellow', 'green'],
+                      'shape':  ['circle', 'square', 'diamond', 'oval'],
+                      'fill':   ['none', 'stripe', 'solid', 'polkadot'],
+                      'number': ['one', 'two', 'three', 'four']}
+        five_hand  = {'colors': ['red', 'blue', 'yellow', 'green', 'purple'],
+                      'shape':  ['circle', 'square', 'diamond', 'oval', 'zig'],
+                      'fill':   ['none', 'stripe', 'solid', 'polkadot', 'zag'],
+                      'number': ['one', 'two', 'three', 'four', 'five']}
+
+        # Instantiate some Cards
+        card1 = Card({'colors': 'red', 'shape': 'circle', 'fill': 'none', 
+                      'number': 'one'}, randomize=False)
+        card2 = Card({'colors': 'blue', 'shape': 'square', 'fill': 'stripe', 
+                      'number': 'two'}, randomize=False)
+        card3 = Card({'colors': 'yellow', 'shape': 'diamond', 'fill': 'solid', 
+                      'number': 'three'}, randomize=False)
+        card4 = Card({'colors': 'green', 'shape': 'oval', 'fill': 'polkadot', 
+                      'number': 'four'}, randomize=False)
+        card5 = Card({'colors': 'purple', 'shape': 'zig', 'fill': 'zag', 
+                      'number': 'five'}, randomize=False)
+
+        three_solver = SetSolver(three_hand)
+        four_solver = SetSolver(four_hand)
+        five_solver = SetSolver(five_hand)
+        self.assertTrue(three_solver.check_for_set([card1, card2, card3]))
+        self.assertTrue(four_solver.check_for_set([card1, card2, card3, card4]))
+        self.assertTrue(five_solver.check_for_set([card1, card2, card3, card4, card5]))
+
+    def test_hands_without_set(self):
+        three_hand = {'colors': ['red', 'blue', 'yellow'],
+                      'shape': ['circle', 'square', 'diamond'],
+                      'fill': ['none', 'stripe', 'solid'],
+                      'number': ['one', 'two', 'three']}
+        four_hand  = {'colors': ['red', 'blue', 'yellow', 'green'],
+                      'shape':  ['circle', 'square', 'diamond', 'oval'],
+                      'fill':   ['none', 'stripe', 'solid', 'polkadot'],
+                      'number': ['one', 'two', 'three', 'four']}
+        five_hand  = {'colors': ['red', 'blue', 'yellow', 'green', 'purple'],
+                      'shape':  ['circle', 'square', 'diamond', 'oval', 'zig'],
+                      'fill':   ['none', 'stripe', 'solid', 'polkadot', 'zag'],
+                      'number': ['one', 'two', 'three', 'four', 'five']}
+
+        # Instantiate some Cards
+        card1 = Card({'colors': 'red', 'shape': 'circle', 'fill': 'none', 
+                      'number': 'one'}, randomize=False)
+        card2 = Card({'colors': 'blue', 'shape': 'square', 'fill': 'stripe', 
+                      'number': 'two'}, randomize=False)
+        card3 = Card({'colors': 'yellow', 'shape': 'diamond', 'fill': 'solid', 
+                      'number': 'three'}, randomize=False)
+        card4 = Card({'colors': 'green', 'shape': 'oval', 'fill': 'polkadot', 
+                      'number': 'four'}, randomize=False)
+        card5 = Card({'colors': 'purple', 'shape': 'zig', 'fill': 'zag', 
+                      'number': 'five'}, randomize=False)
+
+        three_solver = SetSolver(three_hand)
+        four_solver = SetSolver(four_hand)
+        five_solver = SetSolver(five_hand)
+        self.assertFalse(three_solver.check_for_set([card1, card2, card1]))
+        self.assertFalse(four_solver.check_for_set([card1, card2, card3, card1]))
+        self.assertFalse(five_solver.check_for_set([card1, card2, card3, card4, card1]))
+
 
 
 if __name__ == '__main__':
