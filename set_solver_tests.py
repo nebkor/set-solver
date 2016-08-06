@@ -3,7 +3,7 @@
 import random
 import unittest
 
-from set_solver import SetSolver
+from set_solver import SetSolver, Card
 
 
 class TestConstructSolver(unittest.TestCase):
@@ -167,8 +167,8 @@ class TestSetChecking(unittest.TestCase):
                       'number': ['one', 'two', 'three']}
 
         # replace with list of cards when card class done
-        too_small_hand = [0, 1]
-        too_large_hand = [0, 1, 2, 3]
+        too_small_hand = [Card(three_hand), Card(three_hand)]
+        too_large_hand = [Card(three_hand), Card(three_hand), Card(three_hand), Card(three_hand)]
         three_solver = SetSolver(three_hand)
 
         self.assertRaises(TypeError, three_solver.check_for_set, too_small_hand)

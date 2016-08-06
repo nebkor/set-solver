@@ -1,5 +1,7 @@
 # usr/bin/env python
 
+import random 
+
 attribs = {'colors': ['red', 'blue', 'yellow'],
            'shape':  ['circle', 'square', 'diamond'],
            'fill':   ['none', 'stripe', 'solid'],
@@ -7,10 +9,10 @@ attribs = {'colors': ['red', 'blue', 'yellow'],
 
 
 class SetSolver(object):
-    """ Class that solves for number of sets in a hand of Set. 
+    ''' Class that solves for number of sets in a hand of Set. 
         :param attributes: is a dictionary of dictionaries of list, top level
         keyed to attributes like 'color' or 'number'. Attribute lists must 
-        all be the same length. 'number' is a required attribute. """
+        all be the same length. 'number' is a required attribute. '''
     def __init__(self, attributes):
         super(SetSolver, self).__init__()
         self.attributes = self._check_attributes(attributes)
@@ -68,6 +70,21 @@ class SetSolver(object):
         ''' Check for combination of cards to see if it is a set. '''
 
         if not len(list_of_cards) == len(self.attributes['number']):
-            raise TypeError('Number of cards not equal to number of variations')
-        
+            raise TypeError('Hand size must equal possible variations.')
+
+
+class Card(object):
+    ''' Stores card attributes. Takes attribute dict from SetSolver. If
+        randomized, arbitrarily chooses one attribute from each.'''
+    def __init__(self, attributes, randomize=True):
+        self.attributes = self._parse_attribs(attributes, randomize)
+
+    def _parse_attribs(self, attributes, randomize):
+        ''' '''
+        if randomize:
+            return {attribute: random.choice(values)
+                    for attribute, values in attributes.items()}
+
+        else:
+            return attributes
 
