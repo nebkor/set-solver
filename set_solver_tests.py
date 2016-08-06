@@ -6,10 +6,6 @@ import unittest
 from set_solver import SetSolver
 
 # Standard set of card color, shape, fill, and number
-attribs = {'colors': ['red', 'blue', 'yellow'],
-           'shape':  ['circle', 'square', 'diamond'],
-           'fill':   ['none', 'stripe', 'solid'],
-           'number': [num for num in range(3)]}
 
 class TestConstructSolver(unittest.TestCase):
 
@@ -44,7 +40,7 @@ class TestConstructSolver(unittest.TestCase):
                           SetSolver, attribs_not_list,
                           msg='Attributes must be list.')
 
-class TestSolverActions(unittest.TestCase):
+class TestSchemaActions(unittest.TestCase):
 
     def test_schema_creation(self):
         ''' Test scoring schema creation for varying hand sizes. '''
