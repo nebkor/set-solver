@@ -1,3 +1,4 @@
+```
  _______  _______  _______    _______  _______  __   __  _______ 
 |       ||       ||       |  |       ||   _   ||  |_|  ||       |
 |  _____||    ___||_     _|  |    ___||  |_|  ||       ||    ___|
@@ -12,7 +13,7 @@
     |_____  ||  |_|  ||   |___ |       ||    ___||    __  ||__|  
      _____| ||       ||       | |     | |   |___ |   |  | | __   
     |_______||_______||_______|  |___|  |_______||___|  |_||__|  
-
+```
 A simple class that solves games of Set in N-dimensions, with unittests used to track functionality.
 
 The rules of [Set](https://en.wikipedia.org/wiki/Set_(game)) are simple, but hard to explain: given a group of cards showing various numbers, shapes, and colors, select groups that either have one of each variance or are all the same. That is, given three possible variations for each attribute--say color, shape, fill, and number--a set will display either all the same or one of each color, shape, etc.
