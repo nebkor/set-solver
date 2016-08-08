@@ -52,7 +52,7 @@ The same dictionary can be used to instantiate Cards, iterables of which SetSolv
 ```
 or make a specific card like this:
 ```
-    a_single_polkadot_yellow_triangle = Card({'colors': ['yellow'], 'shape': ['triangle'], 'fill': ['polkadot'], 'number': ['one']}, randomize=False)
+    a_single_polkadot_yellow_triangle = Card({'colors': 'yellow', 'shape': 'triangle', 'fill': 'polkadot', 'number': 'one'}, randomize=False)
 ```
 
 
