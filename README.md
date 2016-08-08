@@ -28,7 +28,7 @@ So long as you play by the rules that a Set must be made up of as many cards as 
 
 This means that determining if a combination of cards is a Set is simply tallying scores for each attribute and checking if they are in the set (the Python datatype) of acceptable combinations. Simpler than a bunch of nested loops. For large numbers of cards with many attributes, things still get slow.
 
-## How SetSolver Impliments This
+## How SetSolver Implements This
 
 The SetSolver class requires an `attributes` parameter when it is instantiated, which it uses to build a instance schema to tally scores for hands of cards. The `attributes` must be a dictionary of dictionaries of lists; the lists must be of equal lengths, and one of the attribute dictionaries must be keyed to `number`. This will work:
 ```
