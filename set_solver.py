@@ -95,8 +95,6 @@ class SetSolver(object):
         for hand in combinations(cards, len(self.attributes['number'])):
             if self.check_for_set(hand):
                 sets.append(hand)
-        else:
-            print('Done checking.')
         return sets
 
     def print_cards(self, cards):
