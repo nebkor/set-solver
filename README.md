@@ -14,7 +14,11 @@
      _____| ||       ||       | |     | |   |___ |   |  | | __   
     |_______||_______||_______|  |___|  |_______||___|  |_||__|  
 ```
-A simple class that solves games of Set in N-dimensions, with unittests used to track functionality.
+A simple class that solves games of Set in N-dimensions, with unittests used to track functionality. Try it out:
+
+```
+    python3 -i play_set.py
+```
 
 The rules of [Set](https://en.wikipedia.org/wiki/Set_(game)) are simple, but hard to explain: given a group of cards showing various numbers, shapes, and colors, select groups that either have one of each variance or are all the same. That is, given three possible variations for each attribute&mdash;say color, shape, fill, and number&mdash;a set will display either all the same or one of each color, shape, etc.
 
