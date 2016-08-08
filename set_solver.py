@@ -99,12 +99,30 @@ class SetSolver(object):
             print('Done checking.')
         return sets
 
+    def print_cards(self, cards):
+        ''' Given iterable of cards, print their attributes. '''
+        for card in cards:
+            print(str(card))
+        return
+
+    def deal_game(self, num_to_deal):
+        ''' Create a game by randomly generating num_to_deal cards.
+            Attributes for cards from self.attributes. '''
+        return [Card(self.attributes) for card in range(num_to_deal)]
+
 
 class Card(object):
     ''' Stores card attributes. Takes attribute dict from SetSolver. If
         randomized, arbitrarily chooses one attribute from each.'''
     def __init__(self, attributes, randomize=True):
         self.attributes = self._parse_attribs(attributes, randomize)
+
+    def __repr__(self):
+        repr_str = ['< Card:']
+        for attribute, value in self.attributes.items():
+            repr_str.append('{}: {};'.format(attribute, value))
+        repr_str.append('>')
+        return ' '.join(repr_str)
 
     def __str__(self):
         header = 'Card:\n'
@@ -118,5 +136,9 @@ class Card(object):
                     for attribute, values in attributes.items()}
 
         else:
-            return attributes
+            # Check to make sure non-randomized cards have single variant
+            for variant in attributes.values():
+                if not isinstance(variant, str):
+                    raise TypeError('Card attributes must be strings.')
 
+            return attributes

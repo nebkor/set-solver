@@ -164,14 +164,32 @@ class TestConstructCard(unittest.TestCase):
 
         self.assertRaises(TypeError, Card)
 
-    def test_with_attributes(self):
+    def test_random_attributes(self):
         ''' SetSolver should accept a dictionary of attributes.'''
         attribs = {'colors': ['red', 'blue', 'yellow'],
                    'shape':  ['circle', 'square', 'diamond'],
                    'fill':   ['none', 'stripe', 'solid'],
-                   'number': [num for num in range(3)]}
+                   'number': ['one', 'two', 'three']}
         a_card = Card(attribs)
         self.assertIsNotNone(a_card.attributes)
+
+    def test_assigned_attributes(self):
+        ''' SetSolver should accept a dictionary of attributes.'''
+        attribs = {'colors': 'red',
+                   'shape': 'circle',
+                   'fill': 'none',
+                   'number': 'one'}
+        a_card = Card(attribs)
+        self.assertIsNotNone(a_card.attributes)
+
+    def test_assigned_attributes_malformed(self):
+        ''' SetSolver should accept a dictionary of attributes.'''
+        attribs = {'colors': 1,
+                   'shape': ['circle'],
+                   'fill': 'none',
+                   'number': 'one'}
+        params = {'attributes': attribs, 'randomize': False}
+        self.assertRaises(TypeError, Card, **params)
 
 
 class TestSetChecking(unittest.TestCase):
@@ -258,7 +276,92 @@ class TestSetChecking(unittest.TestCase):
         self.assertFalse(four_solver.check_for_set([card1, card2, card3, card1]))
         self.assertFalse(five_solver.check_for_set([card1, card2, card3, card4, card1]))
 
+class TestGameChecking(unittest.TestCase):
+    ''' Test SetSolver's ability to count total instances of sets
+        in a given hand. '''
 
+    def test_hand_two_sets(self):
+        ''' Test 3, 4, 5 variable games with six cards and two sets. '''
+        three_hand = {'colors': ['red', 'blue', 'yellow'],
+                      'shape': ['circle', 'square', 'diamond'],
+                      'fill': ['none', 'stripe', 'solid'],
+                      'number': ['one', 'two', 'three']}
+        four_hand  = {'colors': ['red', 'blue', 'yellow', 'green'],
+                      'shape':  ['circle', 'square', 'diamond', 'oval'],
+                      'fill':   ['none', 'stripe', 'solid', 'polkadot'],
+                      'number': ['one', 'two', 'three', 'four']}
+        five_hand  = {'colors': ['red', 'blue', 'yellow', 'green', 'purple'],
+                      'shape':  ['circle', 'square', 'diamond', 'oval', 'zig'],
+                      'fill':   ['none', 'stripe', 'solid', 'polkadot', 'zag'],
+                      'number': ['one', 'two', 'three', 'four', 'five']}
+
+        # Instantiate some Cards; fix the violation of PEP 8 later
+        hollow_red_circle = Card({'colors': 'red', 'shape': 'circle', 'fill': 'none', 'number': 'one'}, randomize=False)
+        two_hollow_blue_squares = Card({'colors': 'blue', 'shape': 'square', 'fill': 'stripe',  'number': 'two'}, randomize=False)
+        three_solid_yellow_diamonds = Card({'colors': 'yellow', 'shape': 'diamond', 'fill': 'solid', 'number': 'three'}, randomize=False)
+        four_polkadot_green_ovals = Card({'colors': 'green', 'shape': 'oval', 'fill': 'polkadot', 'number': 'four'}, randomize=False)
+        five_purple_zag_zigs = Card({'colors': 'purple', 'shape': 'zig', 'fill': 'zag', 'number': 'five'}, randomize=False)
+
+        three_hand_game = [hollow_red_circle, hollow_red_circle,
+                           hollow_red_circle, two_hollow_blue_squares,
+                           two_hollow_blue_squares, two_hollow_blue_squares]
+
+        four_hand_game = [four_polkadot_green_ovals, four_polkadot_green_ovals,
+                          four_polkadot_green_ovals, four_polkadot_green_ovals,
+                          hollow_red_circle, hollow_red_circle, 
+                          hollow_red_circle, hollow_red_circle]
+
+        five_hand_game = [five_purple_zag_zigs, five_purple_zag_zigs,
+                          five_purple_zag_zigs, five_purple_zag_zigs,
+                          five_purple_zag_zigs, three_solid_yellow_diamonds,
+                          three_solid_yellow_diamonds, 
+                          three_solid_yellow_diamonds,
+                          three_solid_yellow_diamonds,
+                          three_solid_yellow_diamonds]
+        
+        three_solver = SetSolver(three_hand)
+        four_solver = SetSolver(four_hand)
+        five_solver = SetSolver(five_hand)
+
+        # .find_all_sets returns a list of sets; just checking length for
+        # number of sets in the list here.
+        three_hand_sets = len(three_solver.find_all_sets(three_hand_game))
+        four_hand_sets = len(four_solver.find_all_sets(four_hand_game))
+        five_hand_sets = len(five_solver.find_all_sets(five_hand_game))
+        self.assertEqual(three_hand_sets, 2)
+        self.assertEqual(four_hand_sets, 2)
+        self.assertEqual(five_hand_sets, 2)
+
+class TestGameDealing(unittest.TestCase):
+    ''' Test SetSolver's .deal_game method '''
+
+    def test_with_default_attribs(self):
+        ''' Create game with specified attributes. '''
+
+        three_hand = {'colors': ['red', 'blue', 'yellow'],
+                      'shape':  ['circle', 'square', 'diamond'],
+                      'fill':   ['none', 'stripe', 'solid'],
+                      'number': ['one', 'two', 'three']}
+
+        three_solver = SetSolver(three_hand)
+        hand = three_solver.deal_game(15)
+
+        for card in hand:
+            self.assertIsInstance(card, Card)
+
+    def test_with_random_attribs(self):
+        ''' Create game with randomized attributes. '''
+
+        n = random.randrange(5, 11)
+        n_hand = {key: [value for value in range(n)]
+                  for key in range(n)}
+        n_hand['number'] = [value for value in range(n)]
+
+        n_solver = SetSolver(n_hand)
+        hand = n_solver.deal_game(50)
+
+        for card in hand:
+            self.assertIsInstance(card, Card)
 
 if __name__ == '__main__':
     unittest.main()
