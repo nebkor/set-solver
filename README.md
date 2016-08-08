@@ -16,13 +16,13 @@
 ```
 A simple class that solves games of Set in N-dimensions, with unittests used to track functionality.
 
-The rules of [Set](https://en.wikipedia.org/wiki/Set_(game)) are simple, but hard to explain: given a group of cards showing various numbers, shapes, and colors, select groups that either have one of each variance or are all the same. That is, given three possible variations for each attribute--say color, shape, fill, and number--a set will display either all the same or one of each color, shape, etc.
+The rules of [Set](https://en.wikipedia.org/wiki/Set_(game)) are simple, but hard to explain: given a group of cards showing various numbers, shapes, and colors, select groups that either have one of each variance or are all the same. That is, given three possible variations for each attribute&mdash;say color, shape, fill, and number&mdash;a set will display either all the same or one of each color, shape, etc.
 
 ## Mathematically Determining Sets
 
 So long as you play by the rules that a Set must be made up of as many cards as there are possible attributes, you can use math to determine if a given group of cards is a set. Given a list of possible variants for an attribute, assign each variant a numerical "score" equal to n<sup>i</sup>, where _n_ is the length of the list, and _i_ is the index of the variant. For a three variant list of shapes, ['circle', 'square', 'triangle'], circles recieve 1 point (3<sup>0</sup>), squares 3 (3<sup>1</sup>), and triangles 9 (3<sup>2</sup>). With three possible shapes, there four ways to make a set: 3 circles, 3 squares, 3 triangles, or 1 of each. These possible sets are worth 3, 9, 27, and 13 points respectively, and because of the way that the math works out, using only three cards, those four combinations are the only way to tally to a winning score for shape. If squiggles are added to the shape possibilities, scores for each shape would be 4<sup>i</sup>, or 1, 4, 16, and 64, and possible winning scores would be 4, 16, 64, 256, and 85. And so on for 5 and more attributes.
 
-This means that determining if a combination of cards is a Set is simply tallying scores for each attribute and checking if they are in the set (the Python datatype) of acceptable combinations. Simpler than a bunch of nested loops.
+This means that determining if a combination of cards is a Set is simply tallying scores for each attribute and checking if they are in the set (the Python datatype) of acceptable combinations. Simpler than a bunch of nested loops. For large numbers of cards with many attributes, things still get slow.
 
 ## How SetSolver Impliments This
 
@@ -54,8 +54,4 @@ or make a specific card like this:
 
 ## Unittests
 
-The set_solver_tests.py file has unittests covering the majority of the intended funcitonality. There are edge cases I haven't tested for--I knocked this together in a weekend--but the majority of the functionality is covered.
-
-## Verifying N-dimensional Sets
-
-I looked for datasets of hands of set with lots of cards and with a lot of N-depth, but I didn't find any in a cursory search. I'd like to see how this algorithm stacks up--whether my intuition about n<sup>i</sup> holds, and how fast it is, but I need some data to try it on.
+The set_solver_tests.py file has unittests covering the majority of the intended funcitonality. 
