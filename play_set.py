@@ -51,7 +51,7 @@ I've included some basic card attributes for 3, 4, and 5 variant games.
 The function get_random_attribs will make an attribute dictionary with
 the passed parameter depth:
 
-   n_depth_attributes = get_random_attribs(depth=n)
+   n_depth_attributes = get_random_attributes(depth=n)
 
 Preloaded solvers are three_solver, four_solver, five_solver.
 
