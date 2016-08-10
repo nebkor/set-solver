@@ -11,9 +11,9 @@ attribs = {'colors': ['red', 'blue', 'yellow'],
 
 
 class SetSolver(object):
-    ''' Class that solves for number of sets in a hand of Set. 
+    ''' Class that solves for number of sets in a hand of Set.
         :param attributes: is a dictionary of dictionaries of list, top level
-        keyed to attributes like 'color' or 'number'. Attribute lists must 
+        keyed to attributes like 'color' or 'number'. Attribute lists must
         all be the same length. 'number' is a required attribute. '''
     def __init__(self, attributes):
         super(SetSolver, self).__init__()
@@ -28,7 +28,7 @@ class SetSolver(object):
 
         possibilities = len(attributes['number'])
         for types in attributes.values():
-            if not isinstance(types, list): 
+            if not isinstance(types, list):
                 raise TypeError('Attributes must be list.')
             elif not len(types) == possibilities:
                 raise TypeError('Attributes are not equal in number.')
@@ -47,7 +47,7 @@ class SetSolver(object):
         # for each attribute: number_of_attribs ^ attrib_index
         schema = dict()
         size_of_hand = len(attributes['number'])
-        
+
         for attribute, variations in attributes.items():
             schema[attribute] = {variation: pow(size_of_hand, exponent)
                                  for exponent, variation
@@ -60,7 +60,7 @@ class SetSolver(object):
         # all 1s, 3s, 9s, or one of each--for each attribute. This can be
         # generalized as a set of ints from size_of_hand ** 2 to
         # size_of_hand ** (size_of_hand + 1), plus the sum of the score for
-        # each attribute. 
+        # each attribute.
         schema['valid_scores'] = {pow(size_of_hand, exp)
                                   for exp in range(1, size_of_hand + 1)}
         schema['valid_scores'].add(sum(pow(size_of_hand, exp)
