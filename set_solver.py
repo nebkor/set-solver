@@ -16,7 +16,6 @@ class SetSolver(object):
         keyed to attributes like 'color' or 'number'. Attribute lists must
         all be the same length. 'number' is a required attribute. '''
     def __init__(self, attributes):
-        super(SetSolver, self).__init__()
         self.attributes = self._check_attributes(attributes)
         self.schema = self.make_validation_schema(attributes)
         return
