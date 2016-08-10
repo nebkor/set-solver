@@ -33,14 +33,34 @@ class Deck(object):
         except:
             raise "empty"
 
+    def size(self):
+        return len(self.cards)
+
 class Game(object):
     '''Class to represent a game of Set, comprising a deck and
        a number of dealt cards.'''
-    def __init__(self, numcards=12):
-        self.deck = Deck()
-        self.vis_state = self.deck.deal(numcards)
+    def __init__(self, num_cards=12, deck=None):
+        if deck == None:
+            self.deck = Deck()
+        else:
+            self.deck = deck
+        self.visible = self.deck.deal(numcards)
+        self.num_cards = num_cards
 
-    def
+    def check(self, pset):
+        if is_valid(pset):
+            # remove the cards in pset from the visible state,
+            # and deal three cards from the deck to the visible state
+            for card in pset:
+                self.visible.remove(card)
+            if self.deck.size() > 2:
+                self.visible.append(self.deck.deal(3))
+            else:
+                print "Deck is empty."
+            return True
+        else:
+            # don't do anything if the proposed set is not valid
+            return False
 
 
 class SetSolver(object):
