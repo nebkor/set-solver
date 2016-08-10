@@ -4,10 +4,43 @@ import random
 from itertools import combinations
 
 
-attribs = {'colors': ['red', 'blue', 'yellow'],
+ATTRIBS = {'colors': ['red', 'blue', 'yellow'],
            'shape':  ['circle', 'square', 'diamond'],
            'fill':   ['none', 'stripe', 'solid'],
            'number': ['one', 'two', 'three']}
+
+
+class Deck(object):
+    '''Stateful representation of a Set deck.'''
+    def __init__(self, size=81, attribs=ATTRIBS, shuffle=True):
+        self.size = size
+        self.attribs = attribs
+        self.cards = self._make_deck()
+        if shuffle:
+            random.shuffle(self.cards)
+        else:
+            pass
+
+    def _make_deck(self):
+        return []
+
+    def deal(self, num_cards=3):
+        "Returns a list of num_cards cards."
+        try:
+            ret = self.cards[0:num_cards]
+            self.cards = self.cards[num_cards:]
+            return ret
+        except:
+            raise "empty"
+
+class Game(object):
+    '''Class to represent a game of Set, comprising a deck and
+       a number of dealt cards.'''
+    def __init__(self, numcards=12):
+        self.deck = Deck()
+        self.vis_state = self.deck.deal(numcards)
+
+    def
 
 
 class SetSolver(object):
